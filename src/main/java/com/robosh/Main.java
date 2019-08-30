@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(Task2.getLastNumberFib(696352));
-        Scanner scanner = new Scanner(System.in);
+        int size = Task3.getPizanoSequance(2).size();
+        int k = 10 % size;
+
     }
 }
