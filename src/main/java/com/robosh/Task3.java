@@ -1,37 +1,52 @@
 package com.robosh;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class Task3 {
-    public static List<Integer> getPizanoSequance(int m) {
-        List<Integer> pizanoSequance = new ArrayList<>(50);
-        pizanoSequance.add(0);
-        pizanoSequance.add(1 % m);
 
+    public static List<Integer> getPizanoSequence(int m) {
+        int a = 0;
+        int b = 1;
 
-        List<Long> fibList = new ArrayList<>(100);
-        fibList.add(0L);
-        fibList.add(1L);
+        List<Integer> pizzanoSeq = new LinkedList<>();
+        pizzanoSeq.add(0);
+        pizzanoSeq.add(1);
 
+        int nextFib = 0;
 
-        for (int i = 0; i < m * m - 1; i++) {
-            long a = fibList.get(i);
-            long b = fibList.get(i + 1);
-            long next = a + b;
-            fibList.add(next);
+        while (nextFib / m < 2) {
+            nextFib = (a + b);
+            a = b;
+            b = nextFib;
 
-            if (next%m == 0) {
-                long fi = next + b;
-                long fii = fi + next;
-                if (fi % m == 1 && fii % m == 1) {
-                    break;
+            if (b % m == 0) {
+                long nextOne = (a + b) % m;
+                if (nextOne == 1) {
+                    return pizzanoSeq;
                 }
             }
-
-            pizanoSequance.add((int) (next % m));
+            pizzanoSeq.add(b % m);
         }
-        System.out.println(fibList);
-        return pizanoSequance;
+
+        for (int i = pizzanoSeq.size()-1; i < 6*m; i++) {
+            int next = (pizzanoSeq.get(i) + pizzanoSeq.get(i - 1)) % m;
+            if (next < 0) {
+                System.out.println("alert");
+                try {
+                    Thread.sleep(11111);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (next == 0) {
+                int kk = (next + pizzanoSeq.get(i)) % m;
+                if (kk == 1) {
+                    return pizzanoSeq;
+                }
+            }
+            pizzanoSeq.add(next);
+        }
+        throw new RuntimeException();
     }
 }
